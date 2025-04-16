@@ -1,0 +1,38 @@
+.home-container {
+  text-align: center;
+  padding: 2rem;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+h1 {
+  text-align: center;
+  margin: 0 auto;
+  /* border: 1px solid green; */
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap; /* Allows cards to wrap to the next row */
+  gap: 20px; /* Adds consistent spacing between cards */
+  justify-content: center; /* Centers cards horizontally */
+  width: 100%; /* Ensures the container takes up the full width of its parent */
+  max-width: 1200px; /* Optional: Limits the maximum width for better readability */
+  margin: 0 auto;
+}
+
+.card {
+  width: 200px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  border-radius: 12px;
+  background-color: #f0f0f0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
