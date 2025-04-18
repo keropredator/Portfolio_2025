@@ -21,14 +21,68 @@
 }
 
 .cell {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   width: 100px;
   height: 100px;
   background-color: #f0f0f0;
   border-radius: 8px;
   border: 2px solid #ccc;
+  display: flex;
+  justify-content: center; /* Centers content horizontally */
+  align-items: center; /* Centers content vertically */
+  font-size: 2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.cell:hover {
+  transform: scale(1.04);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+.cell.empty:hover {
+  background-color: #a95454;
+}
+
+.cell.x {
+  color: #e74c3c; /* Red color for "X" */
+  background-color: rgba(231, 76, 60, 0.2); /* Light red tint */
+
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Adds depth with a shadow */
+  animation: pulseX 0.5s ease-in-out; /* Adds a pulsing effect */
+}
+
+/* Styling for "O" */
+.cell.o {
+  color: #2ecc71; /* Green color for "O" */
+  background-color: rgba(46, 204, 113, 0.2); /* Light green tint */
+
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Adds depth with a shadow */
+  animation: pulseO 0.5s ease-in-out; /* Adds a pulsing effect */
+}
+
+@keyframes pulseX {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1); /* Slightly enlarges the symbol */
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Animation for "O" */
+@keyframes pulseO {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1); /* Slightly enlarges the symbol */
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 /* .game-wrapper {
@@ -42,3 +96,18 @@
 .board {
   border: 2px solid green;
 } */
+
+.reset-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.reset-button:hover {
+  background-color: #0056b3;
+}
