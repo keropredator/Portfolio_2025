@@ -107,7 +107,7 @@ function TicTacToe() {
           ))}
         </div>
         <button className="reset-button" onClick={handleReset}>
-          Reset Gam
+          Reset Game
         </button>
       </div>
     </div>
