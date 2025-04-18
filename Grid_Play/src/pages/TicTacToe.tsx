@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState, useEffect, useCallback } from 'react';
 import './TicTacToe.css';
 
@@ -23,33 +22,36 @@ function TicTacToe() {
       const [a, b, c] = combination;
       if (cells[a] && cells[a] === cells[b] && cells[a] === cells[c]) {
         setGameOver(true);
-        return cells[a];
+        return cells[a]; // Return the winning player ("X" or "O")
       }
     }
     if (!cells.includes(null)) {
       setGameOver(true);
-      return 'Draw';
+      return 'draw'; // Return 'draw' if no cells are empty
     }
-    return null;
+    return null; // No winner yet
   };
+
+  useEffect(() => {
+    const result = checkForWinner();
+    if (result) {
+      if (result === 'draw') {
+        alert("It's a Draw");
+      } else {
+        alert(`Player ${result} Wins!`);
+      }
+    }
+  }, [cells]); // Run this effect whenever `cells` changes
 
   const handleClick = (index: number) => {
     if (cells[index] !== null || gameOver) return;
 
     const newCells = [...cells];
     newCells[index] = currentPlayer;
-    setCells(newCells);
+    setCells(newCells); // Update the board state
 
-    const result = checkForWinner();
-    if (result) {
-      if (result === 'draw') {
-        alert("It's a Draw");
-      } else {
-        alert(`Player ${result} Win!`);
-      }
-    } else {
-      setCurrentPlayer(currentPlayer === 'X' ? 'O' : 'X');
-    }
+    // Switch to the other player
+    setCurrentPlayer(currentPlayer === 'X' ? 'O' : 'X');
   };
 
   const handleKeyPress = useCallback(
@@ -72,9 +74,7 @@ function TicTacToe() {
         handleClick(index);
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [cells, currentPlayer, gameOver]
-    //---------------------------------**-------------------------------**--------
   );
 
   useEffect(() => {
@@ -94,7 +94,7 @@ function TicTacToe() {
     <div className="game-wrapper">
       <div className="game-container">
         <h1>Tic Tac Toe</h1>
-        <h2>Current Player : {currentPlayer} </h2>
+        {!gameOver && <h2>Current Player: {currentPlayer}</h2>}
         <div className="board">
           {cells.map((cell, index) => (
             <div
