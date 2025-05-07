@@ -111,3 +111,10 @@
 .reset-button:hover {
   background-color: #0056b3;
 }
+
+.game-over {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  cursor: default;
+  pointer-events: none;
+}

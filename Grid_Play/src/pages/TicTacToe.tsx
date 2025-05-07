@@ -1,23 +1,23 @@
 import { useState, useEffect, useCallback } from 'react';
 import './TicTacToe.css';
+const winningCombination = [
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8],
+  [0, 4, 8],
+  [2, 4, 6],
+];
 
 function TicTacToe() {
   const [cells, setCells] = useState(Array(9).fill(null));
   const [currentPlayer, setCurrentPlayer] = useState<'X' | 'O'>('X');
   const [gameOver, setGameOver] = useState(false);
+  const [winner, setWinner] = useState<'X' | 'O' | 'draw' | null>(null);
 
-  const winningCombination = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ];
-
-  const checkForWinner = () => {
+  const checkForWinner = useCallback(() => {
     for (const combination of winningCombination) {
       const [a, b, c] = combination;
       if (cells[a] && cells[a] === cells[b] && cells[a] === cells[c]) {
@@ -30,18 +30,19 @@ function TicTacToe() {
       return 'draw'; // Return 'draw' if no cells are empty
     }
     return null; // No winner yet
-  };
+  }, [cells]);
 
   useEffect(() => {
-    const result = checkForWinner();
-    if (result) {
-      if (result === 'draw') {
-        alert("It's a Draw");
+    const winner = checkForWinner();
+    if (winner) {
+      setGameOver(true);
+      if (winner === 'draw') {
+        setWinner('draw');
       } else {
-        alert(`Player ${result} Wins!`);
+        setWinner(winner);
       }
     }
-  }, [cells]); // Run this effect whenever `cells` changes
+  }, [cells, checkForWinner]);
 
   const handleClick = (index: number) => {
     if (cells[index] !== null || gameOver) return;
@@ -99,13 +100,29 @@ function TicTacToe() {
           {cells.map((cell, index) => (
             <div
               key={index}
-              className={`cell ${cell === 'X' ? 'x' : cell === 'O' ? 'o' : ''}`}
-              onClick={() => handleClick(index)}
+              className={
+                `cell ${cell === 'X' ? 'x' : cell === 'O' ? 'o' : ''}` +
+                (gameOver ? ' game-over' : '')
+              }
+              onClick={() => {
+                if (!gameOver) {
+                  handleClick(index);
+                }
+              }}
             >
               {cell}
             </div>
           ))}
         </div>
+        {gameOver && (
+          <div className="game-over-message">
+            {winner === 'draw' ? (
+              <h2>It's a Draw!</h2>
+            ) : (
+              <h2>Winner: {winner}</h2>
+            )}
+          </div>
+        )}
         <button className="reset-button" onClick={handleReset}>
           Reset Game
         </button>
